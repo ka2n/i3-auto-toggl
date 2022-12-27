@@ -1,0 +1,10 @@
+patterns:
+  - name: projectA
+    client: clientA
+    match: .*[^a-zA-Z0-9]*(projectA)[^a-zA-Z0-9]*.*
+  - name: projectB
+    client: clientA
+    match: .*(projectB).*
+  - name: projectC
+    client: clientB
+    match: .*(projectC).*
