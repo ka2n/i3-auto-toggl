@@ -1,4 +1,4 @@
-package main
+package i3autotoggl
 
 import (
 	"context"
@@ -9,7 +9,6 @@ import (
 
 	"github.com/adrg/xdg"
 	"github.com/fsnotify/fsnotify"
-	i3autotoggl "github.com/ka2n/i3-auto-toggle"
 	"gopkg.in/yaml.v3"
 )
 
@@ -69,19 +68,19 @@ func watchaFile(ctx context.Context, path string, cb func()) (*fsnotify.Watcher,
 	return watcher, nil
 }
 
-func readConfigFile(configPath string) (i3autotoggl.CompiledConfig, error) {
-	var cfg i3autotoggl.Config
+func readConfigFile(configPath string) (CompiledConfig, error) {
+	var cfg Config
 	b, err := os.ReadFile(configPath)
 	if err != nil {
-		return i3autotoggl.CompiledConfig{}, fmt.Errorf("failed to read config file: %w", err)
+		return CompiledConfig{}, fmt.Errorf("failed to read config file: %w", err)
 	}
 	if err := yaml.Unmarshal(b, &cfg); err != nil {
-		return i3autotoggl.CompiledConfig{}, fmt.Errorf("failed to parse config as YAML: %w", err)
+		return CompiledConfig{}, fmt.Errorf("failed to parse config as YAML: %w", err)
 	}
 
-	ccfg, err := i3autotoggl.CompileConfig(cfg)
+	ccfg, err := CompileConfig(cfg)
 	if err != nil {
-		return i3autotoggl.CompiledConfig{}, fmt.Errorf("failed to parse config: %w", err)
+		return CompiledConfig{}, fmt.Errorf("failed to parse config: %w", err)
 	}
 
 	return ccfg, nil
